@@ -258,7 +258,9 @@ export default function App() {
     } else if (seg === 'codebook') {
       setActiveTab('codebook');
       if (parts[1] != null && parts[1] !== '') {
-        setSelectedCodiIndex(Number(parts[1]));
+        const idx = Number(parts[1]);
+        setSelectedCodiIndex(idx);
+        setCodiTitle(CODI_BOOK_SAMPLES[idx]?.title ?? '');
         setCodiView('detail');
       } else {
         setSelectedCodiIndex(null);
@@ -468,7 +470,7 @@ export default function App() {
                 <Pressable
                   key={i}
                   style={({ pressed }) => [styles.codebookCard, pressed && styles.outfitSlotPressed]}
-                  onPress={() => { setSelectedCodiIndex(i); setCodiView('detail'); }}
+                  onPress={() => { setSelectedCodiIndex(i); setCodiTitle(sample.title); setCodiView('detail'); }}
                 >
                   <View style={styles.codebookCardEmpty}>
                     <Ionicons name="shirt-outline" size={28} color="#DDDDDD" />
