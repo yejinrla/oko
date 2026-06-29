@@ -216,6 +216,7 @@ export default function App() {
   const [codiTags, setCodiTags] = useState<string[]>([]);
   const [codiTagInput, setCodiTagInput] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
+  const [closetImages, setClosetImages] = useState<Record<string, string[]>>({});
   const [pickerCategory, setPickerCategory] = useState<string | null>(null);
   const [sheetCategory, setSheetCategory] = useState<string | null>(null);
   const [sheetVisible, setSheetVisible] = useState(false);
@@ -322,6 +323,24 @@ export default function App() {
     });
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
+    }
+  }
+
+  async function pickClosetImage(category: string) {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('권한 필요', '옷 사진을 등록하려면 사진 접근 권한이 필요해요.');
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [4, 5],
+      quality: 0.85,
+    });
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+      setClosetImages((prev) => ({ ...prev, [category]: [...(prev[category] ?? []), uri] }));
     }
   }
 
@@ -626,7 +645,13 @@ export default function App() {
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={styles.closetRow}
                 >
-                  <Pressable style={({ pressed }) => [styles.closetAddCard, pressed && styles.outfitSlotPressed]}>
+                  {(closetImages[category] ?? []).map((uri, idx) => (
+                    <Image key={idx} source={{ uri }} style={styles.closetItemCard} />
+                  ))}
+                  <Pressable
+                    style={({ pressed }) => [styles.closetAddCard, pressed && styles.outfitSlotPressed]}
+                    onPress={() => pickClosetImage(category)}
+                  >
                     <Ionicons name="add" size={24} color="#C0C0C0" />
                   </Pressable>
                 </ScrollView>
@@ -1435,6 +1460,13 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  closetItemCard: {
+    width: 110,
+    height: 140,
+    borderRadius: 18,
+    backgroundColor: '#F0F0F0',
+    resizeMode: 'cover',
   },
 
   profileCard: {
