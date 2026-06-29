@@ -155,6 +155,20 @@ function makeDateKey(year: number, month: number, day: number) {
   return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
 
+type TabKey = 'home' | 'calendar' | 'codebook' | 'favorites' | 'mypage';
+
+// state -> URL path
+function computePath(tab: TabKey, view: 'grid' | 'detail' | 'edit', idx: number | null) {
+  switch (tab) {
+    case 'home': return '/home';
+    case 'calendar': return '/calendar';
+    case 'codebook': return view !== 'grid' && idx != null ? `/codebook/${idx}` : '/codebook';
+    case 'favorites': return '/closet';
+    case 'mypage': return '/mypage';
+    default: return '/home';
+  }
+}
+
 // today at center (index 3 of 7)
 function getWeekDates() {
   const today = new Date();
@@ -234,6 +248,46 @@ export default function App() {
       document.head.appendChild(style);
     }
   }, []);
+
+  // URL <-> state sync (web only)
+  function applyPath(pathname: string) {
+    const parts = pathname.split('/').filter(Boolean);
+    const seg = parts[0] || 'home';
+    if (seg === 'calendar') {
+      setActiveTab('calendar');
+    } else if (seg === 'codebook') {
+      setActiveTab('codebook');
+      if (parts[1] != null && parts[1] !== '') {
+        setSelectedCodiIndex(Number(parts[1]));
+        setCodiView('detail');
+      } else {
+        setSelectedCodiIndex(null);
+        setCodiView('grid');
+      }
+    } else if (seg === 'closet') {
+      setActiveTab('favorites');
+    } else if (seg === 'mypage') {
+      setActiveTab('mypage');
+    } else {
+      setActiveTab('home');
+    }
+  }
+
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+    applyPath(window.location.pathname);
+    const onPop = () => applyPath(window.location.pathname);
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+    const path = computePath(activeTab, codiView, selectedCodiIndex);
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
+  }, [activeTab, codiView, selectedCodiIndex]);
 
   useEffect(() => {
     async function loadTodayEntry() {
