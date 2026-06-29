@@ -692,25 +692,25 @@ export default function App() {
                 <Text style={styles.sheetTitle}>추가하기</Text>
                 <Pressable
                   style={({ pressed }) => [styles.sheetItem, pressed && styles.outfitSlotPressed]}
-                  onPress={pickImage}
+                  onPress={() => { closeSheet(); setActiveTab('codebook'); setSelectedCodiIndex(null); setCodiView('grid'); }}
                 >
                   <View style={styles.sheetItemLeft}>
                     <View style={[styles.sheetItemIcon, { backgroundColor: '#F0F0F0' }]}>
-                      <Ionicons name="shirt-outline" size={18} color="#555" />
+                      <Ionicons name="albums-outline" size={18} color="#555" />
                     </View>
-                    <Text style={styles.sheetItemText}>코디 추가</Text>
+                    <Text style={styles.sheetItemText}>기존 코디</Text>
                   </View>
                   <Ionicons name="chevron-forward" size={16} color="#C0C0C0" />
                 </Pressable>
                 <Pressable
                   style={({ pressed }) => [styles.sheetItem, { borderBottomWidth: 0 }, pressed && styles.outfitSlotPressed]}
-                  onPress={() => setSheetView('item')}
+                  onPress={() => { closeSheet(); setActiveTab('codebook'); setSelectedCodiIndex(null); setCodiItems({}); setCodiTitle(''); setCodiTags([]); setIsEditMode(true); setCodiView('detail'); }}
                 >
                   <View style={styles.sheetItemLeft}>
                     <View style={[styles.sheetItemIcon, { backgroundColor: '#F0F0F0' }]}>
                       <Ionicons name="add-circle-outline" size={18} color="#555" />
                     </View>
-                    <Text style={styles.sheetItemText}>아이템 추가</Text>
+                    <Text style={styles.sheetItemText}>새 코디</Text>
                   </View>
                   <Ionicons name="chevron-forward" size={16} color="#C0C0C0" />
                 </Pressable>
