@@ -924,7 +924,7 @@ const styles = StyleSheet.create({
   weatherTimeSlot: { alignItems: 'center', gap: 7 },
   weatherTimeLabel: { color: '#6B7280', fontSize: 11, fontWeight: '600', fontFamily: 'Pretendard' },
   weatherTimeIcon: { width: 36, height: 36, resizeMode: 'contain' },
-  weatherBigTemp: { color: '#111111', fontSize: 46, lineHeight: 50, fontWeight: '800', fontFamily: 'Pretendard' },
+  weatherBigTemp: { color: '#111111', fontSize: 46, lineHeight: 50, fontWeight: '600', fontFamily: 'Pretendard' },
   weatherLocationRow: { flexDirection: 'row', alignItems: 'center', gap: 2 },
   weatherLocation: { color: '#6B7280', fontSize: 11, fontWeight: '600', fontFamily: 'Pretendard' },
   weatherRange: { color: '#8E8E93', fontSize: 12, fontWeight: '500', fontFamily: 'Pretendard' },
