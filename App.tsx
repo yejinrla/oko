@@ -234,6 +234,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="dark" />
+      <View style={styles.appShell}>
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -563,6 +564,7 @@ export default function App() {
           <Image source={require('./assets/user.png')} style={[styles.tabHomeIcon, { opacity: activeTab === 'mypage' ? 1 : 0.35 }]} />
         </Pressable>
       </View>
+      </View>
 
       <Modal visible={sheetVisible} transparent animationType="none" onRequestClose={closeSheet}>
         <View style={styles.sheetModalRoot}>
@@ -695,6 +697,7 @@ export default function App() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   safeArea: { flex: 1, backgroundColor: '#FFFFFF' },
+  appShell: { flex: 1, width: '100%', maxWidth: 430, alignSelf: 'center' },
   content: { paddingTop: 20, paddingBottom: 40 },
   mobileFrame: {
     width: '100%',
@@ -1324,9 +1327,11 @@ const styles = StyleSheet.create({
   menuItemText: { fontSize: 15, fontWeight: '500', color: '#222222', fontFamily: 'Pretendard' },
 
   // Bottom sheet
-  sheetModalRoot: { flex: 1, justifyContent: 'flex-end' },
+  sheetModalRoot: { flex: 1, justifyContent: 'flex-end', alignItems: 'center' },
   sheetBackdrop: { backgroundColor: 'rgba(0,0,0,0.55)' },
   sheetContainer: {
+    width: '100%',
+    maxWidth: 430,
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
