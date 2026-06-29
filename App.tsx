@@ -488,11 +488,9 @@ export default function App() {
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.screenContainer, { paddingBottom: 40 }]}>
             <View style={styles.codiDetailHeader}>
               <Pressable
-                style={({ pressed }) => [styles.codiDetailBackBtn, pressed && styles.outfitSlotPressed]}
                 onPress={() => { setCodiView('grid'); setSelectedCodiIndex(null); setCodiItems({}); setCodiTitle(''); setCodiTags([]); setIsEditMode(false); }}
               >
-                <Ionicons name="chevron-back" size={20} color="#333" />
-                <Text style={styles.codiDetailBackText}>Codi</Text>
+                <Text style={styles.screenTitle}>Codi</Text>
               </Pressable>
             </View>
 
