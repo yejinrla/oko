@@ -165,6 +165,7 @@ export default function App() {
   const [codiTagInput, setCodiTagInput] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
   const [pickerCategory, setPickerCategory] = useState<string | null>(null);
+  const [sheetCategory, setSheetCategory] = useState<string | null>(null);
   const [sheetVisible, setSheetVisible] = useState(false);
   const [sheetView, setSheetView] = useState<'main' | 'item'>('main');
   const [activeTab, setActiveTab] = useState<'home' | 'calendar' | 'codebook' | 'favorites' | 'mypage'>('home');
@@ -172,6 +173,7 @@ export default function App() {
   const backdropAnim = useRef(new Animated.Value(0)).current;
 
   function openSheet() {
+    setSheetCategory(null);
     setSheetView('main');
     setSheetVisible(true);
     Animated.parallel([
@@ -479,7 +481,7 @@ export default function App() {
                     </View>
                     <Pressable
                       style={({ pressed }) => [styles.codiItemStackThumb, pressed && styles.outfitSlotPressed]}
-                      onPress={() => { if (isEditMode) { setSheetView('item'); setSheetVisible(true); Animated.parallel([Animated.spring(slideAnim, { toValue: 0, useNativeDriver: true, bounciness: 4 }), Animated.timing(backdropAnim, { toValue: 1, duration: 250, useNativeDriver: true })]).start(); } }}
+                      onPress={() => { if (isEditMode) { setSheetCategory(key); setSheetView('item'); setSheetVisible(true); Animated.parallel([Animated.spring(slideAnim, { toValue: 0, useNativeDriver: true, bounciness: 4 }), Animated.timing(backdropAnim, { toValue: 1, duration: 250, useNativeDriver: true })]).start(); } }}
                       disabled={!isEditMode}
                     >
                       {item ? (
@@ -607,15 +609,15 @@ export default function App() {
                 <View style={styles.sheetBackRow}>
                   <Pressable
                     style={({ pressed }) => [styles.sheetBackBtn, pressed && styles.outfitSlotPressed]}
-                    onPress={() => setSheetView('main')}
+                    onPress={() => sheetCategory ? closeSheet() : setSheetView('main')}
                   >
                     <Ionicons name="chevron-back" size={18} color="#555" />
                     <Text style={styles.sheetBackText}>뒤로</Text>
                   </Pressable>
                 </View>
-                <Text style={styles.sheetTitle}>아이템 추가</Text>
+                <Text style={styles.sheetTitle}>{sheetCategory ? `${sheetCategory} 선택` : '아이템 추가'}</Text>
                 <ScrollView style={{ maxHeight: 420 }} showsVerticalScrollIndicator={false}>
-                  {['아우터', '상의', '하의', '신발', '가방', '악세사리'].map((category) => (
+                  {(sheetCategory ? [sheetCategory] : ['아우터', '상의', '하의', '신발', '가방', '악세사리']).map((category) => (
                     <View key={category} style={styles.sheetCategoryBlock}>
                       <Text style={styles.sheetCategoryLabel}>{category}</Text>
                       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.sheetItemRow}>
