@@ -116,6 +116,15 @@ const TODAY_WEATHER: WeatherSummary = {
   activeIndex: 6,
 };
 
+const CODI_BOOK_SAMPLES = [
+  { title: '데일리 캐주얼', date: '6월 28일' },
+  { title: '오피스 룩', date: '6월 25일' },
+  { title: '주말 나들이', date: '6월 22일' },
+  { title: '비 오는 날', date: '6월 19일' },
+  { title: '카페 데이트', date: '6월 15일' },
+  { title: '미니멀 코디', date: '6월 11일' },
+];
+
 function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -401,7 +410,7 @@ export default function App() {
               <Text style={styles.screenTitle}>Codi Book</Text>
             </View>
             <View style={styles.codebookGrid}>
-              {[1, 2, 3, 4, 5, 6].map((i) => (
+              {CODI_BOOK_SAMPLES.map((sample, i) => (
                 <Pressable
                   key={i}
                   style={({ pressed }) => [styles.codebookCard, pressed && styles.outfitSlotPressed]}
@@ -410,7 +419,8 @@ export default function App() {
                   <View style={styles.codebookCardEmpty}>
                     <Ionicons name="shirt-outline" size={28} color="#DDDDDD" />
                   </View>
-                  <Text style={styles.codebookCardDate}>–</Text>
+                  <Text style={styles.codebookCardTitle} numberOfLines={1}>{sample.title}</Text>
+                  <Text style={styles.codebookCardDate}>{sample.date}</Text>
                 </Pressable>
               ))}
             </View>
@@ -1046,13 +1056,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F5F5F5',
   },
+  codebookCardTitle: {
+    fontSize: 13,
+    color: '#222222',
+    fontFamily: 'Pretendard',
+    fontWeight: '600',
+    paddingHorizontal: 12,
+    paddingTop: 10,
+  },
   codebookCardDate: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#BBBBBB',
     fontFamily: 'Pretendard',
     fontWeight: '500',
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingTop: 2,
+    paddingBottom: 10,
   },
   codiDetailHeader: {
     flexDirection: 'row',
