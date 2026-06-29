@@ -492,7 +492,7 @@ export default function App() {
                 onPress={() => { setCodiView('grid'); setSelectedCodiIndex(null); setCodiItems({}); setCodiTitle(''); setCodiTags([]); setIsEditMode(false); }}
               >
                 <Ionicons name="chevron-back" size={20} color="#333" />
-                <Text style={styles.codiDetailBackText}>Codi Book</Text>
+                <Text style={styles.codiDetailBackText}>Codi</Text>
               </Pressable>
             </View>
 
