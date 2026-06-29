@@ -1209,7 +1209,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     overflow: 'hidden',
     marginBottom: 16,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#F0F0F0',
   },
