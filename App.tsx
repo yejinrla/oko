@@ -507,12 +507,23 @@ export default function App() {
               <Text style={styles.codiViewTitleEmpty}>제목 없음</Text>
             )}
 
-            {/* Representative image */}
+            {/* Representative image — composed from added items */}
             <View style={styles.codiPreviewImageWrap}>
-              <View style={styles.codiPreviewImageEmpty}>
-                <Ionicons name="image-outline" size={44} color="#E0E0E0" />
-                <Text style={styles.codiPreviewHint}>대표 이미지를 추가해보세요.</Text>
-              </View>
+              {(() => {
+                const picked = ['아우터', '상의', '하의', '신발', '가방', '악세사리']
+                  .map((k) => codiItems[k])
+                  .filter(Boolean) as ClosetItem[];
+                if (picked.length === 0) {
+                  return <View style={styles.codiPreviewImageEmpty} />;
+                }
+                return (
+                  <View style={styles.codiPreviewCollage}>
+                    {picked.map((it) => (
+                      <View key={it.id} style={[styles.codiPreviewCollageCell, { backgroundColor: it.color }]} />
+                    ))}
+                  </View>
+                );
+              })()}
             </View>
 
             {/* Tags */}
@@ -1204,9 +1215,16 @@ const styles = StyleSheet.create({
   },
   codiPreviewImageEmpty: {
     height: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
+  },
+  codiPreviewCollage: {
+    height: 300,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  codiPreviewCollageCell: {
+    width: '50%',
+    flexGrow: 1,
+    minHeight: 100,
   },
   codiItemStackList: {
     borderRadius: 20,
