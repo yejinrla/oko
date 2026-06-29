@@ -486,30 +486,37 @@ export default function App() {
         {/* Codi Book — Detail (readonly) */}
         {activeTab === 'codebook' && codiView === 'detail' && (
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.screenContainer, { paddingBottom: 40 }]}>
+            {/* Header: back icon + 저장 */}
             <View style={styles.codiDetailHeader}>
               <Pressable
+                hitSlop={8}
+                style={({ pressed }) => [pressed && styles.outfitSlotPressed]}
                 onPress={() => { setCodiView('grid'); setSelectedCodiIndex(null); setCodiItems({}); setCodiTitle(''); setCodiTags([]); setIsEditMode(false); }}
               >
-                <Text style={styles.screenTitle}>Codi</Text>
+                <Ionicons name="chevron-back" size={24} color="#222" />
+              </Pressable>
+              <Pressable hitSlop={8} style={({ pressed }) => [pressed && styles.outfitSlotPressed]}>
+                <Text style={styles.codiSaveText}>저장</Text>
               </Pressable>
             </View>
 
-            {/* Title above preview */}
+            {/* Main title */}
             {codiTitle ? (
               <Text style={styles.codiViewTitle}>{codiTitle}</Text>
             ) : (
               <Text style={styles.codiViewTitleEmpty}>제목 없음</Text>
             )}
 
-            {/* Large preview */}
+            {/* Representative image */}
             <View style={styles.codiPreviewImageWrap}>
               <View style={styles.codiPreviewImageEmpty}>
-                <Ionicons name="shirt-outline" size={56} color="#E0E0E0" />
+                <Ionicons name="image-outline" size={44} color="#E0E0E0" />
+                <Text style={styles.codiPreviewHint}>대표 이미지를 추가해보세요.</Text>
               </View>
             </View>
 
-            {/* Tags — always visible */}
-            <View style={[styles.codiPreviewTagRow, { marginBottom: 16 }]}>
+            {/* Tags */}
+            <View style={[styles.codiPreviewTagRow, { marginBottom: 24 }]}>
               {codiTags.map((tag) => (
                 <Pressable
                   key={tag}
@@ -548,7 +555,7 @@ export default function App() {
                   <Text style={[styles.codiEditBtnText, { color: '#FFFFFF' }]}>완료</Text>
                 ) : (
                   <>
-                    <Ionicons name="pencil-outline" size={15} color="#555" />
+                    <Ionicons name="pencil-outline" size={12} color="#888" />
                     <Text style={styles.codiEditBtnText}>수정</Text>
                   </>
                 )}
@@ -1130,36 +1137,50 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 20,
+  },
+  codiSaveText: {
+    fontSize: 15,
+    color: '#111111',
+    fontFamily: 'Pretendard',
+    fontWeight: '600',
   },
   codiEditBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    gap: 3,
+    paddingHorizontal: 9,
+    paddingVertical: 4,
     borderRadius: 999,
     backgroundColor: '#F3F3F3',
   },
   codiEditBtnText: {
-    fontSize: 13,
-    color: '#555555',
+    fontSize: 12,
+    color: '#888888',
     fontFamily: 'Pretendard',
     fontWeight: '500',
   },
   codiViewTitle: {
-    fontSize: 26,
+    fontSize: 30,
+    fontWeight: '700',
     color: '#111111',
-    fontFamily: 'CloudsofaNamgim',
-    marginBottom: 12,
+    fontFamily: 'Pretendard',
+    marginBottom: 20,
     paddingLeft: 2,
   },
   codiViewTitleEmpty: {
-    fontSize: 22,
-    color: '#CCCCCC',
-    fontFamily: 'CloudsofaNamgim',
-    marginBottom: 12,
+    fontSize: 30,
+    fontWeight: '700',
+    color: '#CFCFCF',
+    fontFamily: 'Pretendard',
+    marginBottom: 20,
     paddingLeft: 2,
+  },
+  codiPreviewHint: {
+    fontSize: 13,
+    color: '#C4C4C4',
+    fontFamily: 'Pretendard',
+    fontWeight: '500',
   },
   codiSectionHeaderRow: {
     flexDirection: 'row',
