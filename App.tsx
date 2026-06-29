@@ -420,7 +420,7 @@ export default function App() {
                     <Ionicons name="shirt-outline" size={28} color="#DDDDDD" />
                   </View>
                   <Text style={styles.codebookCardTitle} numberOfLines={1}>{sample.title}</Text>
-                  <Text style={styles.codebookCardDate}>{sample.date}</Text>
+                  <Text style={styles.codebookCardDate}>최근 : {sample.date}</Text>
                 </Pressable>
               ))}
             </View>
