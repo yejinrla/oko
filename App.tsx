@@ -51,28 +51,57 @@ const CLOSET_ITEMS: Record<string, ClosetItem[]> = {
     { id: 'o1', name: '베이지 트렌치코트', color: '#E8DCC8' },
     { id: 'o2', name: '네이비 블레이저', color: '#3A4A6B' },
     { id: 'o3', name: '데님 자켓', color: '#7B95B5' },
+    { id: 'o4', name: '카멜 코트', color: '#B5895A' },
+    { id: 'o5', name: '블랙 가디건', color: '#2A2A2A' },
+    { id: 'o6', name: '카키 야상', color: '#7C7A5A' },
+    { id: 'o7', name: '그레이 무스탕', color: '#A8A29A' },
+    { id: 'o8', name: '아이보리 패딩', color: '#F0EBE0' },
+    { id: 'o9', name: '버건디 자켓', color: '#6B2B35' },
   ],
   상의: [
     { id: 't1', name: '할터 블라우스', color: '#F2C9B8' },
     { id: 't2', name: '화이트 셔츠', color: '#F5F5F0' },
     { id: 't3', name: '블랙 니트', color: '#2A2A2A' },
+    { id: 't4', name: '스트라이프 티', color: '#8FA8C8' },
+    { id: 't5', name: '베이지 후디', color: '#D8CBB5' },
+    { id: 't6', name: '핑크 가디건', color: '#E8B8C2' },
+    { id: 't7', name: '카키 맨투맨', color: '#7C7A5A' },
+    { id: 't8', name: '머스타드 니트', color: '#C9A23F' },
+    { id: 't9', name: '네이비 셔츠', color: '#33415C' },
   ],
   하의: [
     { id: 'b1', name: '슬랙스', color: '#4A4A52' },
     { id: 'b2', name: '데님 스커트', color: '#9AAFC9' },
     { id: 'b3', name: '와이드 팬츠', color: '#C8BBA8' },
+    { id: 'b4', name: '블랙 진', color: '#222228' },
+    { id: 'b5', name: '플리츠 스커트', color: '#B7A99A' },
+    { id: 'b6', name: '카고 팬츠', color: '#6E6A52' },
+    { id: 'b7', name: '연청 진', color: '#A9C0D9' },
+    { id: 'b8', name: '코듀로이 팬츠', color: '#9C6B3F' },
   ],
   신발: [
     { id: 's1', name: '로퍼', color: '#5C3A28' },
     { id: 's2', name: '스니커즈', color: '#EAEAEA' },
+    { id: 's3', name: '첼시 부츠', color: '#2A2320' },
+    { id: 's4', name: '메리제인', color: '#4A2C3A' },
+    { id: 's5', name: '샌들', color: '#C9A876' },
+    { id: 's6', name: '발레 플랫', color: '#E8D5D0' },
   ],
   가방: [
     { id: 'g1', name: '토트백', color: '#C9A876' },
     { id: 'g2', name: '크로스백', color: '#8B5E3C' },
+    { id: 'g3', name: '숄더백', color: '#3A3530' },
+    { id: 'g4', name: '버킷백', color: '#D8C4A8' },
+    { id: 'g5', name: '미니백', color: '#B5495B' },
+    { id: 'g6', name: '백팩', color: '#4A4A52' },
   ],
   악세사리: [
     { id: 'a1', name: '실버 목걸이', color: '#D6D6D6' },
     { id: 'a2', name: '골드 이어링', color: '#D4AF37' },
+    { id: 'a3', name: '진주 귀걸이', color: '#F0EBE0' },
+    { id: 'a4', name: '가죽 벨트', color: '#5C3A28' },
+    { id: 'a5', name: '울 머플러', color: '#8FA8C8' },
+    { id: 'a6', name: '버킷햇', color: '#7C7A5A' },
   ],
 };
 const TODAY_WEATHER: WeatherSummary = {
@@ -620,7 +649,7 @@ export default function App() {
                   {(sheetCategory ? [sheetCategory] : ['아우터', '상의', '하의', '신발', '가방', '악세사리']).map((category) => (
                     <View key={category} style={styles.sheetCategoryBlock}>
                       <Text style={styles.sheetCategoryLabel}>{category}</Text>
-                      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.sheetItemRow}>
+                      <View style={styles.sheetItemGrid}>
                         {(CLOSET_ITEMS[category] ?? []).map((item) => (
                           <Pressable
                             key={item.id}
@@ -634,7 +663,7 @@ export default function App() {
                             <Text style={styles.sheetItemCardName} numberOfLines={1}>{item.name}</Text>
                           </Pressable>
                         ))}
-                      </ScrollView>
+                      </View>
                     </View>
                   ))}
                 </ScrollView>
@@ -1360,17 +1389,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard',
     marginBottom: 10,
   },
-  sheetItemRow: {
+  sheetItemGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 12,
-    paddingRight: 8,
   },
   sheetItemCard: {
-    width: 80,
+    width: '30%',
     gap: 6,
   },
   sheetItemSwatch: {
-    width: 80,
-    height: 80,
+    width: '100%',
+    aspectRatio: 1,
     borderRadius: 14,
   },
   sheetItemCardName: {
