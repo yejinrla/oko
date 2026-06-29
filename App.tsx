@@ -221,7 +221,7 @@ export default function App() {
   useEffect(() => {
     if (Platform.OS === 'web') {
       const style = document.createElement('style');
-      style.textContent = "@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/pretendard-dynamic-subset.css'); html, body, #root { background-color: #FFFFFF; }";
+      style.textContent = "@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/pretendard-dynamic-subset.css'); html, body, #root { background-color: #FFFFFF; height: 100%; min-height: 100vh; } #root { display: flex; }";
       document.head.appendChild(style);
     }
   }, []);
